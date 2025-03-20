@@ -3,6 +3,7 @@
 // to avoid animation code leakage across different pages.
 
 import { homeInit } from "../pages/home.js";
+import { programInit } from "../pages/program.js";
 
 export function initPageRouter() {
   const pageWrapper = document.querySelector("[data-page-name]");
@@ -17,6 +18,7 @@ export function initPageRouter() {
   // Mapping of page names to their respective starter functions
   const pageStarters = {
     home: homeInit(),
+    program: programInit(),
     // Add additional page starters here
   };
 
