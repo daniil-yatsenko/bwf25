@@ -18,12 +18,20 @@ const navbar = {
   openMenu(immediate = false) {
     const tl = gsap.timeline();
     tl.set(this.menuWrapper, { display: "block" });
+    tl.set(this.navbarEl, {
+      backgroundColor: "var(--background-color--background-primary)",
+      color: "var(--text-color--text-primary)",
+    });
     this.isMenuOpen = true;
     return tl;
   },
   closeMenu(immediate = false) {
     const tl = gsap.timeline();
     tl.set(this.menuWrapper, { display: "none" });
+    tl.set(this.navbarEl, {
+      backgroundColor: "",
+      color: "",
+    });
     this.isMenuOpen = false;
     return tl;
   },
@@ -110,10 +118,9 @@ const navbar = {
       const tl = gsap.timeline();
 
       if (window.innerWidth > 991 && this.isSetToMobile) {
-        this.isMenuOpen = false;
+        this.closeMenu(true);
         this.isSetToMobile = false;
         tl.call(() => {
-          console.log("resize");
           this.menuDropdowns.forEach((dropdown) => {
             const toggle = dropdown.querySelector(".navbar_dropdown-toggle");
             const link = dropdown.querySelector(".navbar_link");
@@ -129,6 +136,12 @@ const navbar = {
             }
           });
         });
+        tl.set(this.menuWrapper, { display: "", delay: 0.1 });
+        tl.set(this.navbarEl, {
+          backgroundColor: "",
+          color: "",
+        });
+        console.log("debug");
       }
 
       if (window.innerWidth < 992 && !this.isSetToMobile) {
