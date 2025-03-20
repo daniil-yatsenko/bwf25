@@ -1,6 +1,9 @@
 // import { exampleComponent } from "./exampleComponent.js";
+import { sliders } from "./sliders";
+import "@splidejs/splide/css/core";
 
 export const componentsInit = (page = document) => {
+  sliders();
   console.log("components init");
 };
 

@@ -1,17 +1,14 @@
-// import { navbar } from "./navigation";
-// import { lenisInit } from "./lenis.js";
-// import { componentsInit } from "../components/index";
-import { sliders } from "../components/sliders";
-import "@splidejs/splide/css/core";
+import { navbar } from "./navigation";
+import { lenisInit } from "./lenis.js";
+import { componentsInit } from "../components/index";
 
-// var lenisMain = lenisInit();
-// export { lenisMain };
+var lenisMain = lenisInit();
+export { lenisMain };
 
 const globalInit = async () => {
-  //   navbar.init();
-  //   componentsInit(document);
+  navbar.init();
+  componentsInit();
   console.log("globalInit");
-  sliders();
 };
 
 export { globalInit };

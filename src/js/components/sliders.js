@@ -9,10 +9,11 @@ const splideConfig = {
     pagination: false,
     gap: "calc(var(--sizes-gaps--padding))",
   },
-  testimonials: {
+  smallCard: {
     type: "loop",
     pagination: false,
     gap: "1rem",
+    clones: 8,
     autoScroll: {
       speed: 5,
     },
@@ -29,7 +30,7 @@ const sliders = () => {
       config = splideConfig.horizontalCard;
     }
     if (slider.classList.contains("is-small-card")) {
-      config = splideConfig.testimonials;
+      config = splideConfig.smallCard;
       //   mountConfig = { AutoScroll }; // uncomment to enable autoscroll
     }
 
