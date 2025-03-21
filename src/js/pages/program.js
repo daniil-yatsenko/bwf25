@@ -1,14 +1,20 @@
-// needs heavy refactoring
+// add scroll trigger start determination function
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { lenisMain } from "../global/globalInit.js";
 
 const sessionsList = document.querySelector(".session-list_list");
-let sessions = document.querySelectorAll(".session-list_item");
-const dayBtns = document.querySelectorAll(".session-times_day-filter_day");
-let firstSessions = {};
+let dayBtns = document.querySelectorAll(".session-times_day-filter_day");
+let allSessions = document.querySelectorAll(".session-list_item");
+let firstSessions = {}; // {day: session object}
 
+// calculate the scroll offset based on the breakpoint
+function getScrollOffset() {
+  return window.innerWidth > 991 ? -100 : -220;
+}
+
+// update the session date text on the page
 function updateDayDate(session) {
   const caption = document.querySelector(".session-times_day-caption");
 
@@ -20,72 +26,106 @@ function updateDayDate(session) {
     session.getAttribute("session-date-month");
 }
 
-function parseSessions() {
-  gsap.registerPlugin(ScrollTrigger);
-  ScrollTrigger.killAll();
+// update the first session of each day and map them to buttons
+function updateFirstSessions() {
+  allSessions = document.querySelectorAll(".session-list_item");
 
+  // reset firstSessions
   dayBtns.forEach((button, index) => {
-    const firstSession = document.querySelector(
+    let session = document.querySelector(
       `.session-list_item[session-day="${index + 1}"]`
     );
-    firstSessions[`${index + 1}`] = firstSession;
+    firstSessions[index + 1] = session;
   });
+  console.log(firstSessions);
 
-  Object.entries(firstSessions).forEach(([key, session]) => {
-    ScrollTrigger.create({
-      trigger: session,
-      start: "top 50%",
-      onEnter: () => {
-        console.log("entered");
-        dayBtns.forEach((btn) => btn.classList.remove("is-active"));
-        dayBtns[key - 1].classList.add("is-active");
-        console.log(session);
-        updateDayDate(session);
-      },
-      onLeaveBack: () => {
-        console.log("entered");
-        if (key > 1) {
-          dayBtns.forEach((btn) => btn.classList.remove("is-active"));
-          dayBtns[key - 2].classList.add("is-active");
-          updateDayDate(firstSessions[`${key - 1}`]);
-        }
-      },
-      markers: true,
-    });
+  // update day buttons
+  dayBtns.forEach((button, index) => {
+    if (firstSessions[index + 1]) {
+      button.replaceWith(button.cloneNode(true)); // remove event listeners
+      button = document.querySelectorAll(".session-times_day-filter_day")[
+        index
+      ];
+      button.addEventListener("click", () => {
+        lenisMain.scrollTo(firstSessions[index + 1], {
+          offset: getScrollOffset(),
+        });
+      });
+      gsap.set(button, { cursor: "" });
+    } else {
+      gsap.set(button, { cursor: "not-allowed" });
+    }
+    dayBtns = document.querySelectorAll(".session-times_day-filter_day");
   });
 }
 
+// update the active state of the day buttons
+function updateBtnsActiveState(day) {
+  dayBtns.forEach((button) => {
+    button.classList.remove("is-active");
+  });
+  dayBtns[parseInt(day) - 1].classList.add("is-active");
+}
+
+// create scroll triggers for each day's first session
+function createScrollTriggers() {
+  let prevFirstSession = null;
+  let prevFirstSessionKey = null;
+  Object.entries(firstSessions).forEach(([key, session]) => {
+    if (session) {
+      let capturedPrevSession = prevFirstSession; // capture the previous session as scrollTrigger is delayed
+      let capturedPrevSessionKey = prevFirstSessionKey; // same but for key
+
+      ScrollTrigger.create({
+        trigger: session,
+        start: "bottom 60%",
+        onEnter: () => {
+          updateDayDate(session);
+          updateBtnsActiveState(key);
+        },
+        onLeaveBack: () => {
+          if (capturedPrevSession) {
+            updateDayDate(capturedPrevSession);
+            updateBtnsActiveState(capturedPrevSessionKey);
+          }
+        },
+        markers: true,
+      });
+      prevFirstSession = session;
+      prevFirstSessionKey = key;
+    }
+  });
+}
+
+// trigger session updates after Finsweet filters are applied
+function triggerUIUpdate() {
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.killAll();
+
+  dayBtns = document.querySelectorAll(".session-times_day-filter_day");
+  updateDayDate(allSessions[0]);
+  updateFirstSessions();
+  createScrollTriggers();
+}
+
+// mutation observer for Finsweet filters updates
 let triggered = false;
 const observer = new MutationObserver((mutationsList) => {
   if (mutationsList.some((mutation) => mutation.type === "childList")) {
     if (!triggered) {
       triggered = true;
-
-      parseSessions();
-
       setTimeout(() => {
         triggered = false;
-        ScrollTrigger.refresh();
+        triggerUIUpdate();
+        console.log("session list updated");
       }, 10);
     }
   }
 });
 
 const programInit = () => {
-  parseSessions();
+  triggerUIUpdate();
   observer.observe(sessionsList, { childList: true });
-
-  dayBtns.forEach((button, index) => {
-    button.addEventListener("click", () => {
-      let firstSession = firstSessions[`${index + 1}`];
-
-      if (firstSession) {
-        lenisMain.scrollTo(firstSession, { offset: -90 });
-        dayBtns.forEach((btn) => btn.classList.remove("is-active"));
-        button.classList.add("is-active");
-      }
-    });
-  });
 };
 
 export { programInit };
