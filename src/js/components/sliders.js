@@ -1,5 +1,6 @@
 import Splide from "@splidejs/splide";
 import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
+import "@splidejs/splide/css/core";
 
 const splideConfig = {
   default: {

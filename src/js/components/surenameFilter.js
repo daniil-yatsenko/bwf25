@@ -1,4 +1,4 @@
-// not finished / not working. For now only creates the checkboxes.
+import { gsap } from "gsap";
 
 function getAlphabetRange(start, end) {
   // input "a", "c" >> output ["a", "b", "c"]
@@ -14,41 +14,58 @@ function getAlphabetRange(start, end) {
   return result;
 }
 
-function insertCheckbox(letter) {
-  let checkboxHTML = `
-<label fs-cmsfilter-field="${letter}" class="w-checkbox filter-checkbox-field hide"><input type="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input hide"><span class="text-size-small w-form-label" for="checkbox"></span></label>
-`;
-  return checkboxHTML;
-}
-
 const surenameFilterInit = () => {
   let filterBlock = document.querySelector("[surename-filter]");
   if (!filterBlock) {
     return;
   }
 
-  let tags = filterBlock.querySelectorAll(".tag");
+  let unfilterTag = document.querySelector(
+    '[fs-cmsfilter-clear="letter"][fs-cmsfilter-element="clear"]'
+  );
+  let tags = [...filterBlock.querySelectorAll(".tag")].filter(
+    (tag) => tag !== unfilterTag
+  );
+  let tagFilterGroups = new Map();
+  let allFilters = document.querySelectorAll(
+    `.filter-checkbox-field[fs-cmsfilter-field="letter"]`
+  );
 
+  // map each tag to the filters based on the first letter
   tags.forEach((tag) => {
     let str = tag.textContent;
     if (str !== "All") {
       let firstLetter = str.charAt(0);
       let lastLetter = str.charAt(str.length - 1);
+      let letters = getAlphabetRange(firstLetter, lastLetter);
 
-      let alphabetRange = getAlphabetRange(firstLetter, lastLetter);
-      alphabetRange.forEach((letter) => {
-        tag.insertAdjacentHTML("beforeend", insertCheckbox(letter));
+      let tagFilterGroup = [];
+      letters.forEach((letter) => {
+        allFilters.forEach((filter) => {
+          if (filter.querySelector("span").textContent == letter) {
+            tagFilterGroup.push(filter);
+          }
+        });
       });
+      tagFilterGroups.set(tag, tagFilterGroup);
     }
   });
 
+  // add click event to regular filter tags
   tags.forEach((tag) => {
     tag.addEventListener("click", () => {
-      tag.classList.toggle("active");
-      let checkboxes = tag.querySelectorAll("[fs-cmsfilter-field]");
-      checkboxes.forEach((checkbox) => {
-        checkbox.click();
+      let tagFilterGroup = tagFilterGroups.get(tag);
+      tagFilterGroup.forEach((filter) => {
+        filter.click();
       });
+
+      tag.classList.toggle("is-active");
+    });
+  });
+
+  unfilterTag.addEventListener("click", () => {
+    tags.forEach((tag) => {
+      tag.classList.remove("is-active");
     });
   });
 };

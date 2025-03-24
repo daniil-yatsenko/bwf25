@@ -1,5 +1,4 @@
 const unwrapElements = () => {
-  console.log("unwrap");
   const elements = document.querySelectorAll("[unwrap]");
   elements.forEach((element) => {
     const parent = element.parentNode;

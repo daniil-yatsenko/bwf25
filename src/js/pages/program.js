@@ -124,6 +124,10 @@ const observer = new MutationObserver((mutationsList) => {
 });
 
 const programInit = () => {
+  if (!sessionsList) {
+    return;
+  }
+
   triggerUIUpdate();
   observer.observe(sessionsList, { childList: true });
 };

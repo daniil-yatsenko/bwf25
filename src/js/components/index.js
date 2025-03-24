@@ -1,9 +1,18 @@
 // import { exampleComponent } from "./exampleComponent.js";
 import { sliders } from "./sliders";
-import "@splidejs/splide/css/core";
+import { surenameFilterInit } from "./surenameFilter";
+import { unwrapElements } from "../utils/unwrap.js";
+import { pathNameInit } from "./pathname.js";
+import { scrollLinksInit } from "./scrollLinks.js";
+import { accordionInit } from "./accordion.js";
 
 export const componentsInit = (page = document) => {
   sliders();
+  surenameFilterInit();
+  pathNameInit();
+  scrollLinksInit();
+  accordionInit();
+  unwrapElements(); // util to unwrap elements with [unwrap]
   console.log("components init");
 };
 
