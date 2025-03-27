@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import { navbar } from "../global/navigation";
+import { buttonsInit } from "./buttons";
 
 function hideOverlay() {
   const tl = gsap.timeline();
@@ -111,7 +112,6 @@ function heroAnimationRouter() {
   if (animation) {
     animation.play(); // Ensure the animation is played
     tl.add(animation);
-    console.log(tl);
   } else {
     console.warn("no hero animation detected");
   }
@@ -129,7 +129,6 @@ function pageLoad() {
   tl.set(nav, { y: "-100%" });
   tl.add(heroAnimationRouter(), ">");
   tl.add(hideOverlay(), "<");
-
   tl.to(
     [secondSection, nav],
     {
@@ -147,7 +146,7 @@ function pageLoad() {
 const generalInit = () => {
   console.log("general animations init");
   pageLoad().play();
-  //   heroAnimationRouter().play();
+  buttonsInit();
 };
 
 export { generalInit };
