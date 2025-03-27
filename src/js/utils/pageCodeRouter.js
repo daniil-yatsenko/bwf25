@@ -4,6 +4,7 @@
 
 import { homeInit } from "../pages/home.js";
 import { programInit } from "../pages/program.js";
+import { schoolProgramInit } from "../pages/schoolProgram.js";
 
 export function initPageRouter() {
   const pageWrapper = document.querySelector("[data-page-name]");
@@ -19,6 +20,7 @@ export function initPageRouter() {
   const pageStarters = {
     home: homeInit(),
     program: programInit(),
+    schoolProgram: schoolProgramInit(),
     // Add additional page starters here
   };
 
