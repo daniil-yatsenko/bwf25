@@ -1,6 +1,7 @@
 // checks how many grid cells per row, and removes all cells from row two onwards.
 const writersCentreInit = () => {
   const workshopSection = document.querySelector(".section_wc-workshops");
+  if (!workshopSection) return;
   const grid = workshopSection.querySelector(".grid").querySelector(".grid");
 
   const computedStyle = window.getComputedStyle(grid);
