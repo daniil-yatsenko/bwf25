@@ -18,8 +18,8 @@ function hideOverlay() {
 }
 
 function heroV1(hero) {
-  const bigTextLeft = hero.querySelector(".hero_left-block-wrapper");
-  const bigTextRight = hero.querySelector(".hero_right-block-wrapper");
+  const bigTextLeft = hero.querySelector(".page-hero_left-block-wrapper");
+  const bigTextRight = hero.querySelector(".page-hero_right-block-wrapper");
   const smallText = hero.querySelector(".heading-style-h5");
   const imageWrap = hero.querySelector(".page-hero_image-wrapper");
   const image = hero.querySelector("img");
@@ -98,6 +98,80 @@ function heroV3(hero) {
   return tl;
 }
 
+function typewriter(heading) {
+  const speed = 0.05;
+  const originalText = heading.textContent;
+  const typewriterTl = gsap.timeline();
+  heading.textContent = " ";
+
+  gsap.fromTo(
+    heading.nextSibling,
+    {
+      borderRightColor: "black",
+      repeat: -1,
+      duration: 1,
+      ease: "power2.inOut",
+    },
+    {
+      borderRightColor: "#BC915E",
+      repeat: -1,
+      duration: 1,
+      ease: "power2.inOut",
+    }
+  );
+
+  // typewriter
+  for (let i = 0; i < originalText.length; i++) {
+    typewriterTl.to(heading, {
+      textContent: originalText.slice(0, i + 1),
+      duration: speed,
+      ease: "none",
+    });
+  }
+}
+
+function heroHome(hero) {
+  const bigTextLeft = hero.querySelector(".hero_left-block-wrapper");
+  const bigTextRight = hero.querySelector(".hero_right-block-wrapper");
+  const image = hero.querySelector("img");
+  const btnWrap = hero.querySelector(".hero_right-block_button-wrapper");
+  const showreel = hero.querySelector(".hero_showreel-banner");
+  const heading = hero.querySelector(".hero_h1-wrapper").children[0];
+
+  if (!bigTextLeft || !image || !btnWrap || !showreel) {
+    return false;
+  }
+
+  const tl = gsap.timeline();
+
+  typewriter(heading);
+
+  tl.set([bigTextLeft, bigTextRight, btnWrap, showreel], {
+    opacity: 0,
+    y: "4rem",
+  });
+  tl.set(image, { opacity: 0 });
+
+  // typewriter cursor – separate from tl to avoid a bug
+  gsap.set(heading.nextSibling, {
+    borderRightStyle: "solid",
+    borderRightWidth: "1px",
+    borderRightColor: "black",
+  });
+
+  tl.to([bigTextLeft, bigTextRight, btnWrap, showreel], {
+    opacity: 1,
+    y: "",
+    duration: 0.6,
+    delay: 0.2,
+    ease: "power2.out",
+    stagger: 0.15,
+  });
+  tl.to(image, { opacity: 1, delay: -0.6, duration: 0.8, ease: "power1.out" });
+
+  return tl;
+}
+
 // checks which hero section is on the page, and plays the respective animation. If nothing is
 // detected, plays a default animation
 function heroAnimationRouter() {
@@ -105,6 +179,7 @@ function heroAnimationRouter() {
   const hero = mainWrapper.children[0];
   const tl = gsap.timeline({});
   let animation;
+  if (hero.querySelector(".hero_wrapper")) animation = heroHome(hero);
   if (hero.querySelector(".page-hero_wrapper")) animation = heroV1(hero);
   if (hero.querySelector(".page-hero-v2_wrapper")) animation = heroV2(hero);
   if (hero.querySelector(".page-hero-v3_wrapper")) animation = heroV3(hero);
