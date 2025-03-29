@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { lenisMain } from "../global/globalInit";
 
 function close(items, item) {
   const content = item.querySelector(".accordion-content");
@@ -18,6 +19,7 @@ function close(items, item) {
     onComplete: () => {
       item.classList.remove("is-opened");
       ScrollTrigger.refresh();
+      lenisMain.resize();
     },
   });
 }
@@ -43,6 +45,7 @@ function open(items, item) {
     onComplete: () => {
       item.classList.add("is-opened");
       ScrollTrigger.refresh();
+      lenisMain.resize();
     },
   });
 }
