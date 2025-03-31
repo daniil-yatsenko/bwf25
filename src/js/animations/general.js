@@ -104,6 +104,10 @@ function typewriter(heading) {
   const typewriterTl = gsap.timeline();
   heading.textContent = " ";
 
+  if (window.innerWidth > 992) {
+    gsap.set(heading.parentElement, { maxWidth: "70vw" });
+  }
+
   gsap.fromTo(
     heading.nextSibling,
     {

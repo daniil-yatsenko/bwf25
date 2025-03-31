@@ -69,8 +69,6 @@ function animateNavBar() {
     { width: "auto", ease: "linear", immediateRender: true },
     "<"
   );
-
-  tl.set(".hero_h1-wrapper", { maxWidth: "69vw" });
 }
 
 const homeInit = () => {

@@ -18,12 +18,14 @@ function getScrollOffset() {
 function updateDayDate(session) {
   const caption = document.querySelector(".session-times_day-caption");
 
-  caption.querySelector("[session-date-dow]").textContent =
-    session.getAttribute("session-date-dow");
-  caption.querySelector("[session-date-day]").textContent =
-    session.getAttribute("session-date-day");
-  caption.querySelector("[session-date-month]").textContent =
-    session.getAttribute("session-date-month");
+  if (session) {
+    caption.querySelector("[session-date-dow]").textContent =
+      session.getAttribute("session-date-dow");
+    caption.querySelector("[session-date-day]").textContent =
+      session.getAttribute("session-date-day");
+    caption.querySelector("[session-date-month]").textContent =
+      session.getAttribute("session-date-month");
+  }
 }
 
 // update the first session of each day and map them to buttons
@@ -103,9 +105,12 @@ function triggerUIUpdate() {
   ScrollTrigger.killAll();
 
   dayBtns = document.querySelectorAll(".session-times_day-filter_day");
-  updateDayDate(allSessions[0]);
+
   updateFirstSessions();
   createScrollTriggers();
+  setTimeout(() => {
+    updateDayDate(allSessions[0]);
+  }, 50); // delay for filter to fetch updated data
 }
 
 // mutation observer for Finsweet filters updates

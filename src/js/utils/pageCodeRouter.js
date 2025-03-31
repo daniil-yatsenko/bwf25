@@ -19,10 +19,10 @@ export function initPageRouter() {
 
   // Mapping of page names to their respective starter functions
   const pageStarters = {
-    home: homeInit(),
-    program: programInit(),
-    schoolProgram: schoolProgramInit(),
-    writersCentre: writersCentreInit(),
+    home: homeInit,
+    program: programInit,
+    schoolProgram: schoolProgramInit,
+    writersCentre: writersCentreInit,
     // Add additional page starters here
   };
 
