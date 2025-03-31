@@ -80,7 +80,7 @@ function createScrollTriggers() {
 
       ScrollTrigger.create({
         trigger: session,
-        start: "bottom 60%",
+        start: "top 35%",
         onEnter: () => {
           updateDayDate(session);
           updateBtnsActiveState(key);
@@ -91,7 +91,6 @@ function createScrollTriggers() {
             updateBtnsActiveState(capturedPrevSessionKey);
           }
         },
-        markers: true,
       });
       prevFirstSession = session;
       prevFirstSessionKey = key;

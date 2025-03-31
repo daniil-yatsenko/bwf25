@@ -173,10 +173,44 @@ const navbar = {
 
     window.addEventListener("resize", resizeHandler);
   },
+  hideOnScroll() {
+    const setting = document
+      .querySelector(".navbar_wrapper")
+      .getAttribute("data-nav-hide-on-scroll");
+
+    if (setting == "true") {
+      let lastScrollTop = 0;
+
+      window.addEventListener("scroll", () => {
+        let scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+
+        if (scrollTop > lastScrollTop) {
+          // Scrolling down - hide navbar
+          gsap.to(this.navbarEl, {
+            y: "-100%",
+            duration: 0.4,
+            ease: "power2.InOut",
+          });
+        } else {
+          // Scrolling up - show navbar
+          gsap.to(this.navbarEl, {
+            y: "0",
+            duration: 0.4,
+            ease: "power2.InOut",
+          });
+        }
+
+        lastScrollTop = scrollTop;
+      });
+    }
+  },
   init() {
     if (window.innerWidth < 992) {
       this.isSetToMobile = true;
       this.mobileInit();
+    } else {
+      this.hideOnScroll();
     }
     this.resizeListener();
     this.handleMenuClick();
