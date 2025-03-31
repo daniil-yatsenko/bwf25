@@ -21,7 +21,7 @@ const navbar = {
     const tl = gsap.timeline();
 
     lenisMain.stop();
-
+    console.log("lenis main stopped");
     tl.set(this.menuWrapper, { display: "block" });
     tl.set(this.navbarEl, {
       backgroundColor: "var(--background-color--background-primary)",
