@@ -1,4 +1,6 @@
 import { gsap } from "gsap";
+import { lenisMain } from "./globalInit";
+import { lenisInit } from "./lenis";
 
 const navbar = {
   navbarEl: document.querySelector(".navbar_navbar"),
@@ -17,6 +19,9 @@ const navbar = {
 
   openMenu(immediate = false) {
     const tl = gsap.timeline();
+
+    lenisMain.stop();
+
     tl.set(this.menuWrapper, { display: "block" });
     tl.set(this.navbarEl, {
       backgroundColor: "var(--background-color--background-primary)",
@@ -27,6 +32,9 @@ const navbar = {
   },
   closeMenu(immediate = false) {
     const tl = gsap.timeline();
+
+    lenisMain.start();
+
     tl.set(this.menuWrapper, { display: "none" });
     tl.set(this.navbarEl, {
       backgroundColor: "",
@@ -57,6 +65,8 @@ const navbar = {
     const subMenu = document.querySelector(
       ".navbar_menu-wrapper.is-second-level"
     );
+    const lenisMenu = lenisInit(this.menuWrapper);
+    const lenisSubMenu = lenisInit(subMenu);
 
     function clearSubMenu() {
       subMenu
@@ -65,7 +75,15 @@ const navbar = {
     }
 
     function appendSubMenu(children) {
-      subMenu.append(...children);
+      const clonedChildren = Array.from(children).map((child) =>
+        child.cloneNode(true)
+      );
+
+      subMenu
+        .querySelector(".navbar_second-level-links-wrapper")
+        .append(...clonedChildren);
+
+      lenisSubMenu.resize();
     }
 
     // handle dropdowns
@@ -91,6 +109,7 @@ const navbar = {
         clearSubMenu();
         appendSubMenu(dropdownLinks);
         tl.restart();
+        lenisMenu.stop();
       };
 
       this.eventListenersMap.set(dropdown, dropdownClickHandler);
@@ -108,6 +127,7 @@ const navbar = {
     const backBtnClickHandler = function () {
       clearSubMenu();
       backBtnTl.restart();
+      lenisMenu.start();
     };
 
     this.eventListenersMap.set(backBtn, backBtnClickHandler);
