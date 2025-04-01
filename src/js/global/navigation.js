@@ -21,7 +21,8 @@ const navbar = {
     const tl = gsap.timeline();
 
     lenisMain.stop();
-    console.log("lenis main stopped");
+    document.body.style.overflow = "hidden";
+
     tl.set(this.menuWrapper, { display: "block" });
     tl.set(this.navbarEl, {
       backgroundColor: "var(--background-color--background-primary)",
@@ -34,6 +35,8 @@ const navbar = {
     const tl = gsap.timeline();
 
     lenisMain.start();
+    document.body.style.overflow = "";
+    // this.navbarEl.style.overflow = "auto";
 
     tl.set(this.menuWrapper, { display: "none" });
     tl.set(this.navbarEl, {
