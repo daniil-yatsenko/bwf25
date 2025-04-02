@@ -9,9 +9,9 @@ let dayBtns = document.querySelectorAll(".session-times_day-filter_day");
 let allSessions = document.querySelectorAll(".session-list_item");
 let firstSessions = {}; // {day: session object}
 
-// calculate the scroll offset based on the breakpoint
-function getScrollOffset() {
-  return window.innerWidth > 991 ? -100 : -220;
+// calculate the day buttons clickscroll offset based on the breakpoint
+function dayBtnsScrollOffset() {
+  return window.innerWidth > 991 ? -100 : -210;
 }
 
 // update the session date text on the page
@@ -50,7 +50,7 @@ function updateFirstSessions() {
       ];
       button.addEventListener("click", () => {
         lenisMain.scrollTo(firstSessions[index + 1], {
-          offset: getScrollOffset(),
+          offset: dayBtnsScrollOffset(),
         });
       });
       gsap.set(button, { cursor: "" });
