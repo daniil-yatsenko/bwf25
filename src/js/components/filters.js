@@ -1,6 +1,8 @@
 import { gsap } from "gsap";
 import { lenisMain } from "../global/globalInit";
 
+gsap.defaults({ ease: "power2.inOut", duration: 0.3 });
+
 function scrollOffsets() {
   const navbar = document.querySelector(".navbar_navbar");
 
@@ -12,7 +14,10 @@ function scrollOffsets() {
         selector: ".event-directory-grid",
         styles: { marginTop: "1.5rem", paddingTop: "6.5rem" },
       },
-      { selector: ".person-card_grid", styles: { paddingTop: "7rem" } },
+      {
+        selector: ".person-card_grid",
+        styles: { marginTop: "1rem", paddingTop: "7rem" },
+      },
       {
         selector: ".session-list_list",
         styles: { marginTop: "1rem", paddingTop: "7rem" },
@@ -34,6 +39,8 @@ let scrollOffset = scrollOffsets();
 // handle mobile filters block
 const filterButton = document.querySelector("[mobile-filter-button]");
 const filters = document.querySelector("[mobile-filter-list]");
+let filtersPadding;
+if (filters) filtersPadding = window.getComputedStyle(filters).paddingBottom;
 const activeTags = document.querySelector("[mobile-filter-active-tags]");
 const mobileScrollAnchor = document.querySelector(
   '[fs-cmsfilter-element="list"]'
@@ -44,20 +51,39 @@ const applyBtn = filters?.querySelector(".button-small") ?? null;
 
 let isOpened = false;
 function handleFilterClick() {
+  const tl = gsap.timeline();
   if (!isOpened) {
     lenisMain.stop();
+
     lenisMain.scrollTo(mobileScrollAnchor, {
       offset: -scrollOffset,
       force: true,
     });
-    gsap.set(overflow, { display: "block" });
-    gsap.set(filters, { display: "flex" });
-    gsap.set(activeTags, { display: "none" });
+    tl.set(overflow, { display: "block", opacity: 0 });
+    tl.set(filters, {
+      display: "flex",
+      opacity: 0,
+      height: "0rem",
+      paddingBottom: 0,
+    });
+    tl.set(activeTags, { display: "none" });
+    tl.to(filters, {
+      height: "auto",
+      duration: 0.4,
+      ease: "power2.in",
+    });
+    tl.to(filters, {
+      paddingBottom: filtersPadding,
+      duration: 0.2,
+      ease: "power2.out",
+    });
+    tl.to([overflow, filters], { opacity: 1 });
     isOpened = true;
   } else {
-    gsap.set(filters, { display: "none" });
-    gsap.set(overflow, { display: "none" });
-    gsap.set(activeTags, { display: "flex" });
+    tl.to([overflow, filters], { opacity: 0 });
+    tl.to(filters, { paddingBottom: 0, height: 0, duration: 0.4 });
+    tl.set([filters, overflow], { display: "none" });
+    tl.set(activeTags, { display: "flex" });
     lenisMain.start();
     isOpened = false;
   }
