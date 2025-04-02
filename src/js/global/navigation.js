@@ -2,6 +2,8 @@ import { gsap } from "gsap";
 import { lenisMain } from "./globalInit";
 import { lenisInit } from "./lenis";
 
+gsap.defaults({ ease: "power2.inOut", duration: 0.3 });
+
 const navbar = {
   navbarEl: document.querySelector(".navbar_navbar"),
   navLinks: document.querySelectorAll(".navbar_link"),
@@ -17,32 +19,39 @@ const navbar = {
   isSetToMobile: false,
   eventListenersMap: new WeakMap(),
 
-  openMenu(immediate = false) {
+  openMenu() {
     const tl = gsap.timeline();
 
     lenisMain.stop();
-    document.body.style.overflow = "hidden";
 
+    tl.set(document.body, { overflow: "hidden" });
+    tl.to(this.navbarEl, { opacity: 0, duration: 0.1 });
     tl.set(this.menuWrapper, { display: "block" });
     tl.set(this.navbarEl, {
       backgroundColor: "var(--background-color--background-primary)",
       color: "var(--text-color--text-primary)",
     });
+    tl.set(this.menuLinksWrapper.children, { opacity: 0, y: "1rem" });
+    tl.to(this.navbarEl, { opacity: 1 });
+    tl.to(this.menuLinksWrapper.children, { opacity: 1, y: "", stagger: 0.08 });
+
     this.isMenuOpen = true;
     return tl;
   },
-  closeMenu(immediate = false) {
+  closeMenu() {
     const tl = gsap.timeline();
 
     lenisMain.start();
-    document.body.style.overflow = "";
-    // this.navbarEl.style.overflow = "auto";
 
+    tl.to(this.navbarEl, { opacity: 0 });
     tl.set(this.menuWrapper, { display: "none" });
     tl.set(this.navbarEl, {
       backgroundColor: "",
       color: "",
     });
+    tl.to(this.navbarEl, { opacity: 1, duration: 0.1 });
+    tl.to(document.body, { overflow: "" });
+
     this.isMenuOpen = false;
     return tl;
   },
@@ -105,14 +114,14 @@ const navbar = {
       tl.to([this.menuLinksWrapper, subMenu], {
         x: "-100vw",
         duration: 0.4,
-        ease: "expo.inOut",
+        ease: "power2.inOut",
       });
 
       const dropdownClickHandler = () => {
         clearSubMenu();
         appendSubMenu(dropdownLinks);
-        tl.restart();
         lenisMenu.stop();
+        tl.restart();
       };
 
       this.eventListenersMap.set(dropdown, dropdownClickHandler);
@@ -124,11 +133,10 @@ const navbar = {
     backBtnTl.to([this.menuLinksWrapper, subMenu], {
       x: "0vw",
       duration: 0.4,
-      ease: "expo.inOut",
+      ease: "power2.inOut",
     });
 
     const backBtnClickHandler = function () {
-      clearSubMenu();
       backBtnTl.restart();
       lenisMenu.start();
     };
