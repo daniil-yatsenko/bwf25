@@ -5,8 +5,7 @@ import { unwrapElements } from "../utils/unwrap.js";
 import { pathNameInit } from "./pathname.js";
 import { scrollLinksInit } from "./scrollLinks.js";
 import { accordionInit } from "./accordion.js";
-import { mobileFiltersInit } from "./mobileFilters.js";
-import { desktopFiltersInit } from "./desktopFilters.js";
+import { filtersInit } from "./filters.js";
 
 export const componentsInit = (page = document) => {
   sliders();
@@ -15,8 +14,7 @@ export const componentsInit = (page = document) => {
   scrollLinksInit();
   accordionInit();
   unwrapElements(); // util to unwrap elements with [unwrap]
-  mobileFiltersInit();
-  desktopFiltersInit();
+  filtersInit();
   console.log("components init");
 };
 
