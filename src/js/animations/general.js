@@ -198,11 +198,56 @@ function heroAnimationRouter() {
   return tl;
 }
 
-function pageLoad() {
+async function pageLoad() {
   const mainWrapper = document.querySelector(".main-wrapper");
   const secondSection = mainWrapper.children[1].children[0];
   const tl = gsap.timeline({ paused: true });
   const nav = navbar.navbarEl;
+  const ack = document.querySelector(".overlay_acknowledgement-wrapper");
+  const ackBtn = ack.querySelector(".button");
+
+  function getCookie(name) {
+    const cookies = document.cookie.split("; ");
+    for (let cookie of cookies) {
+      let [cookieName, cookieValue] = cookie.split("=");
+      if (cookieName === name) {
+        return cookieValue;
+      }
+    }
+    return null;
+  }
+
+  function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+      let date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+  }
+
+  async function ackOnFirstVisit() {
+    return new Promise((resolve) => {
+      if (!getCookie("acknowledgementShown")) {
+        gsap.set(ack, { display: "block", opacity: 0 });
+        gsap.to(ack, { opacity: 1, duration: 0.3, ease: "power.inOut" });
+
+        ackBtn.addEventListener("click", () => {
+          ack.style.display = "none";
+          gsap.to(ack, {
+            opacity: 0,
+            duration: 0.3,
+            ease: "power.inOut",
+            onComplete: () => {
+              setCookie("acknowledgementShown", "true", 7);
+              resolve();
+            },
+          });
+        });
+      } else resolve();
+    });
+  }
 
   tl.set(secondSection, { opacity: 0, y: "7rem" });
   tl.set(nav, { y: "-100%" });
@@ -219,12 +264,13 @@ function pageLoad() {
     "<"
   );
 
-  return tl;
+  await ackOnFirstVisit();
+  tl.play();
 }
 
 const generalInit = () => {
   console.log("general animations init");
-  pageLoad().play();
+  pageLoad();
   buttonsInit();
 };
 
