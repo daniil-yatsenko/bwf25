@@ -1,6 +1,7 @@
 import { gsap } from "gsap";
 import { lenisMain } from "./globalInit";
 import { lenisInit } from "./lenis";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.defaults({ ease: "power2.inOut", duration: 0.3 });
 
@@ -185,6 +186,8 @@ const navbar = {
     window.addEventListener("resize", resizeHandler);
   },
   hideOnScroll() {
+    return;
+    // disabed
     const setting = document
       .querySelector(".navbar_wrapper")
       .getAttribute("data-nav-hide-on-scroll");
@@ -216,15 +219,43 @@ const navbar = {
       });
     }
   },
+  handleTransparency() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const transpNav = document.querySelector(
+      '[data-wf--navbar--variant="light---transparent"]'
+    );
+    const heroV1 = document.querySelector(".page-hero_wrapper");
+
+    if (transpNav && heroV1) {
+      ScrollTrigger.create({
+        trigger: heroV1,
+        start: "bottom top+=80",
+        onEnter: () => {
+          gsap.to(this.navbarEl, {
+            backgroundColor: "var(--background-color--background-primary)",
+            color: "var(--text-color--text-primary)",
+          });
+        },
+        onLeaveBack: () => {
+          gsap.to(this.navbarEl, {
+            backgroundColor: "",
+            color: "",
+          });
+        },
+      });
+    }
+  },
   init() {
     if (window.innerWidth < 992) {
       this.isSetToMobile = true;
       this.mobileInit();
     } else {
-      this.hideOnScroll();
+      this.hideOnScroll(); // disabled
     }
     this.resizeListener();
     this.handleMenuClick();
+    this.handleTransparency();
   },
 };
 

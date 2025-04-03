@@ -6,6 +6,8 @@ import { pathNameInit } from "./pathname.js";
 import { scrollLinksInit } from "./scrollLinks.js";
 import { accordionInit } from "./accordion.js";
 import { filtersInit } from "./filters.js";
+import { personCardInit } from "./personCard.js";
+import { updateFooterYear } from "./footerYear.js";
 
 export const componentsInit = (page = document) => {
   sliders();
@@ -15,6 +17,8 @@ export const componentsInit = (page = document) => {
   accordionInit();
   unwrapElements(); // util to unwrap elements with [unwrap]
   filtersInit();
+  personCardInit();
+  updateFooterYear();
   console.log("components init");
 };
 
