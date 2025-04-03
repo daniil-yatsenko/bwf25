@@ -23,6 +23,7 @@ export function initPageRouter() {
   const pageStarters = {
     home: homeInit,
     program: programInit,
+    kbdo: programInit,
     schoolProgram: schoolProgramInit,
     writersCentre: writersCentreInit,
     news: newsInit,

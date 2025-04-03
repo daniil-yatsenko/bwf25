@@ -18,8 +18,17 @@ const scrollLinksInit = () => {
   });
 
   scrollLinks.forEach((link) => {
-    const target = document.querySelector(link.getAttribute("href"));
+    let href = link.getAttribute("href");
     link.setAttribute("href", "#");
+
+    let target;
+
+    if (href == "#data-slug") {
+      target = document.querySelector("#" + link.getAttribute("data-slug"));
+      console.log(target);
+    } else if (href !== "#") {
+      target = document.querySelector(href);
+    }
 
     if (target) {
       link.addEventListener("click", () => {

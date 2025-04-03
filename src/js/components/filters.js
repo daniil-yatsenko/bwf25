@@ -22,6 +22,10 @@ function scrollOffsets() {
         selector: ".session-list_list",
         styles: { marginTop: "1rem", paddingTop: "7rem" },
       },
+      {
+        selector: ".session-list_list.is-kbdo",
+        styles: { marginTop: "1rem", paddingTop: "5rem" },
+      },
     ];
 
     adjustments.forEach(({ selector, styles }) => {

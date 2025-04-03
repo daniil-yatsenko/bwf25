@@ -149,7 +149,7 @@ const navbar = {
       const tl = gsap.timeline();
 
       if (window.innerWidth > 991 && this.isSetToMobile) {
-        this.closeMenu(true);
+        this.closeMenu();
         this.isSetToMobile = false;
         tl.call(() => {
           this.menuDropdowns.forEach((dropdown) => {
@@ -167,7 +167,7 @@ const navbar = {
             }
           });
         });
-        tl.set(this.menuWrapper, { display: "", delay: 0.1 });
+        tl.set(this.menuWrapper, { display: "", delay: 0.5 });
         tl.set(this.navbarEl, {
           backgroundColor: "",
           color: "",
