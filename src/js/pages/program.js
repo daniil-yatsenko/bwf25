@@ -9,6 +9,17 @@ let dayBtns = document.querySelectorAll(".session-times_day-filter_day");
 let allSessions = document.querySelectorAll(".session-list_item");
 let firstSessions = {}; // {day: session object}
 
+function cleanUpCommas() {
+  document
+    .querySelectorAll(".session-list_item-details-wrapper")
+    .forEach((wrapper) => {
+      let commas = wrapper.querySelectorAll(".is-comma");
+      if (commas.length > 0) {
+        commas[commas.length - 1].style.display = "none";
+      }
+    });
+}
+
 // calculate the day buttons clickscroll offset based on the breakpoint
 function dayBtnsScrollOffset() {
   return window.innerWidth > 991 ? -100 : -210;
@@ -132,6 +143,7 @@ const programInit = () => {
     return;
   }
 
+  cleanUpCommas();
   triggerUIUpdate();
   observer.observe(sessionsList, { childList: true });
 };
