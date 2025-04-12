@@ -108,21 +108,24 @@ function typewriter(heading) {
     gsap.set(heading.parentElement, { maxWidth: "70vw" });
   }
 
-  gsap.fromTo(
-    heading.nextSibling,
-    {
-      borderRightColor: "black",
-      repeat: -1,
-      duration: 1,
-      ease: "power2.inOut",
-    },
-    {
-      borderRightColor: "#BC915E",
-      repeat: -1,
-      duration: 1,
-      ease: "power2.inOut",
-    }
-  );
+  // typewriter cursor animation
+  // disabled as per feedback
+
+  // gsap.fromTo(
+  //   heading.nextSibling,
+  //   {
+  //     borderRightColor: "black",
+  //     repeat: -1,
+  //     duration: 1,
+  //     ease: "power2.inOut",
+  //   },
+  //   {
+  //     borderRightColor: "#BC915E",
+  //     repeat: -1,
+  //     duration: 1,
+  //     ease: "power2.inOut",
+  //   }
+  // );
 
   // typewriter
   for (let i = 0; i < originalText.length; i++) {
@@ -157,11 +160,13 @@ function heroHome(hero) {
   tl.set(image, { opacity: 0 });
 
   // typewriter cursor – separate from tl to avoid a bug
-  gsap.set(heading.nextSibling, {
-    borderRightStyle: "solid",
-    borderRightWidth: "1px",
-    borderRightColor: "black",
-  });
+  // disabled as per feedback
+
+  // gsap.set(heading.nextSibling, {
+  //   borderRightStyle: "solid",
+  //   borderRightWidth: "1px",
+  //   borderRightColor: "black",
+  // });
 
   tl.to([bigTextLeft, bigTextRight, btnWrap, showreel], {
     opacity: 1,

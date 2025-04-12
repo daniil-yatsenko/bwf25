@@ -13,7 +13,8 @@ const buttonsInit = () => {
     gsap.set(contentWrapper.childNodes, {
       display: "flex",
       gap: "0.5rem",
-      alignItems: "left",
+      alignItems: "flex start",
+      flexDirection: "column",
     });
     while (button.firstChild) {
       button.removeChild(button.firstChild);
@@ -25,21 +26,21 @@ const buttonsInit = () => {
     });
     gsap.set(children[1], {
       position: "absolute",
-      top: "0%",
-      right: "-150%",
+      top: "100%",
+      left: "0%",
     });
 
     // add event listeners
     button.addEventListener("mouseenter", () => {
       gsap.to(children, {
-        x: "-150%",
-        duration: 0.5,
-        ease: "power2.inOut",
+        y: "-100%",
+        duration: 0.8,
+        ease: "power3.inOut",
       });
     });
 
     button.addEventListener("mouseleave", () => {
-      gsap.to(children, { x: "0%", duration: 0.5, ease: "power2.inOut" });
+      gsap.to(children, { y: "0%", duration: 0.8, ease: "power3.inOut" });
     });
   });
 };

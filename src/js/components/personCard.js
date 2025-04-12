@@ -16,11 +16,9 @@ const personCardInit = () => {
     const img = card.querySelector(".festival-writers_writer-image");
     if (link) {
       link.addEventListener("mouseover", () => {
-        gsap.to(imgWrapper, { borderRadius: "0.5rem" });
         gsap.to(img, { scale: 1.02 });
       });
       link.addEventListener("mouseout", () => {
-        gsap.to(imgWrapper, { borderRadius: "0rem" });
         gsap.to(img, { scale: 1 });
       });
     }

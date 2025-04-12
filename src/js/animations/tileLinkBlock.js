@@ -24,11 +24,6 @@ const tileLinkBlockInit = () => {
         duration: 0.3,
         ease: "power2.inOut",
       });
-      tl.to(
-        block.parentElement,
-        { borderRadius: "0.5rem", duration: 0.3 },
-        "<"
-      );
 
       block.addEventListener("mouseenter", () => {
         tl.restart();

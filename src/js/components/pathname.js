@@ -1,7 +1,10 @@
 import { gsap } from "gsap";
 
-function capitalizeFirstLetter(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+function capitalizeFirstLetterOfEveryWord(str) {
+  return str
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
 const pathNameInit = () => {
@@ -17,7 +20,7 @@ const pathNameInit = () => {
 
   pathNameArray.forEach((path, index) => {
     let link = `${baseUrl}/${pathNameArray.slice(0, index + 1).join("/")}`; // link to each sub-page
-    let linkName = capitalizeFirstLetter(path.replace(/-/g, " ")); // replace "-" with " "
+    let linkName = capitalizeFirstLetterOfEveryWord(path.replace(/-/g, " ")); // replace "-" with " "
     const tl = gsap.timeline();
 
     let slashEl = '<div class="text-size-small margin-right">/</div>';
