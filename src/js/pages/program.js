@@ -8,6 +8,7 @@ const sessionsList = document.querySelector(".session-list_list");
 let dayBtns = document.querySelectorAll(".session-times_day-filter_day");
 let allSessions = document.querySelectorAll(".session-list_item");
 let firstSessions = {}; // {day: session object}
+let scrollTrigger;
 
 function cleanUpCommas() {
   document
@@ -50,7 +51,6 @@ function updateFirstSessions() {
     );
     firstSessions[index + 1] = session;
   });
-  console.log(firstSessions);
 
   // update day buttons
   dayBtns.forEach((button, index) => {
@@ -89,7 +89,7 @@ function createScrollTriggers() {
       let capturedPrevSession = prevFirstSession; // capture the previous session as scrollTrigger is delayed
       let capturedPrevSessionKey = prevFirstSessionKey; // same but for key
 
-      ScrollTrigger.create({
+      scrollTrigger = ScrollTrigger.create({
         trigger: session,
         start: "top 35%",
         onEnter: () => {
@@ -112,7 +112,7 @@ function createScrollTriggers() {
 // trigger session updates after Finsweet filters are applied
 function triggerUIUpdate() {
   gsap.registerPlugin(ScrollTrigger);
-  ScrollTrigger.killAll();
+  if (scrollTrigger) scrollTrigger.kill();
 
   dayBtns = document.querySelectorAll(".session-times_day-filter_day");
 
@@ -132,7 +132,6 @@ const observer = new MutationObserver((mutationsList) => {
       setTimeout(() => {
         triggered = false;
         triggerUIUpdate();
-        console.log("session list updated");
       }, 10);
     }
   }

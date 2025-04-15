@@ -25,7 +25,6 @@ const scrollLinksInit = () => {
 
     if (href == "#data-slug") {
       target = document.querySelector("#" + link.getAttribute("data-slug"));
-      console.log(target);
     } else if (href !== "#") {
       target = document.querySelector(href);
     }

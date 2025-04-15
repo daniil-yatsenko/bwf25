@@ -20,6 +20,5 @@ export function lenisInit(wrapper = null) {
 
   gsap.ticker.lagSmoothing(0);
 
-  console.log("lenis initiated");
   return lenis;
 }

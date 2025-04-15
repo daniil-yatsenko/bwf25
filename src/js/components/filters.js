@@ -136,14 +136,12 @@ const observer = new MutationObserver((mutationsList) => {
       setTimeout(() => {
         triggered = false;
         lenisMain.resize();
-        console.log("session list updated");
       }, 10);
     }
   }
 });
 
 const filtersInit = () => {
-  console.log("filters init");
   const list = document.querySelector(".w-dyn-items");
   if (!list) return;
 

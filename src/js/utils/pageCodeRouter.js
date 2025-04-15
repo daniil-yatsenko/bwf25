@@ -13,7 +13,6 @@ export function initPageRouter() {
   const pageWrapper = document.querySelector("[data-page-name]");
 
   if (!pageWrapper) {
-    console.warn("No data-page-name attribute found on the page wrapper.");
     return;
   }
 
@@ -35,6 +34,5 @@ export function initPageRouter() {
   if (starterFunction) {
     starterFunction();
   } else {
-    console.warn(`No specific animations found for page: ${pageName}`);
   }
 }

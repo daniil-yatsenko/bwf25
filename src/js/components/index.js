@@ -19,10 +19,7 @@ export const componentsInit = (page = document) => {
   filtersInit();
   personCardInit();
   updateFooterYear();
-  console.log("components init");
 };
 
 // needed only with Barba.js
-export const componentsCleanup = (page = document) => {
-  console.log("components cleanup");
-};
+export const componentsCleanup = (page = document) => {};

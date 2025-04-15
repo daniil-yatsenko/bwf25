@@ -197,7 +197,6 @@ function heroAnimationRouter() {
     animation.play(); // Ensure the animation is played
     tl.add(animation);
   } else {
-    console.warn("no hero animation detected");
   }
 
   return tl;
@@ -274,7 +273,6 @@ async function pageLoad() {
 }
 
 const generalInit = () => {
-  console.log("general animations init");
   pageLoad();
   buttonsInit();
 };

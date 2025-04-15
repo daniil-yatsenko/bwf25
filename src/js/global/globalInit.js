@@ -10,7 +10,6 @@ const globalInit = async () => {
   navbar.init();
   componentsInit();
   animationsInit();
-  console.log("globalInit");
 };
 
 export { globalInit };

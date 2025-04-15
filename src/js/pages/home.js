@@ -37,7 +37,6 @@ function animateNavBar() {
 
 const homeInit = () => {
   animateNavBar();
-  console.log("Home page initialized");
 };
 
 export { homeInit };

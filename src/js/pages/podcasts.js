@@ -4,7 +4,6 @@
 import { gsap } from "gsap";
 
 function yearFilterBlocks() {
-  console.log("debug");
   const tags = document.querySelectorAll(
     '.filter-checkbox-field[fs-cmsfilter-field="year"]'
   );

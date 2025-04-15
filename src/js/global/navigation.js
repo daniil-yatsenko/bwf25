@@ -9,6 +9,8 @@ const navbar = {
   navbarEl: document.querySelector(".navbar_navbar"),
   navLinks: document.querySelectorAll(".navbar_link"),
   menuBtn: document.querySelector(".navbar_menu-button"),
+  burgerIcon: document.querySelector(".navbar_menu-burger-icon"),
+  crossIcon: document.querySelector(".navbar_menu-cross-icon"),
   menuWrapper: document.querySelector(".navbar_menu-wrapper"),
   menuLinksWrapper: document.querySelector(".navbar_menu-links-wrapper"),
   overlay: document.querySelector(".overlay_wrapper"),
@@ -27,6 +29,8 @@ const navbar = {
 
     tl.set(document.body, { overflow: "hidden" });
     tl.to(this.navbarEl, { opacity: 0, duration: 0.1 });
+    tl.set(this.burgerIcon, { display: "none" });
+    tl.set(this.crossIcon, { display: "flex" });
     tl.set(this.menuWrapper, { display: "block" });
     tl.set(this.navbarEl, {
       backgroundColor: "var(--background-color--background-primary)",
@@ -46,11 +50,13 @@ const navbar = {
 
     tl.to(this.navbarEl, { opacity: 0 });
     tl.set(this.menuWrapper, { display: "none" });
+    tl.set(this.burgerIcon, { display: "flex" });
+    tl.set(this.crossIcon, { display: "none" });
     tl.set(this.navbarEl, {
       backgroundColor: "",
       color: "",
     });
-    tl.to(this.navbarEl, { opacity: 1, duration: 0.1 });
+    tl.to(this.navbarEl, { opacity: 1, duration: 0.2 });
     tl.to(document.body, { overflow: "" });
 
     this.isMenuOpen = false;
@@ -173,7 +179,6 @@ const navbar = {
           backgroundColor: "",
           color: "",
         });
-        console.log("debug");
       }
 
       if (window.innerWidth < 992 && !this.isSetToMobile) {
@@ -228,7 +233,7 @@ const navbar = {
     const heroV1 = document.querySelector(".page-hero_wrapper");
 
     if (transpNav && heroV1) {
-      ScrollTrigger.create({
+      const st = ScrollTrigger.create({
         trigger: heroV1,
         start: "bottom top+=80",
         onEnter: () => {
