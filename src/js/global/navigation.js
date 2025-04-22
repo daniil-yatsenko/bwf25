@@ -31,7 +31,7 @@ const navbar = {
     tl.to(this.navbarEl, { opacity: 0, duration: 0.1 });
     tl.set(this.burgerIcon, { display: "none" });
     tl.set(this.crossIcon, { display: "flex" });
-    tl.set(this.menuWrapper, { display: "block" });
+    tl.set(this.menuWrapper, { display: "flex" });
     tl.set(this.navbarEl, {
       backgroundColor: "var(--background-color--background-primary)",
       color: "var(--text-color--text-primary)",
@@ -84,6 +84,7 @@ const navbar = {
     const subMenu = document.querySelector(
       ".navbar_menu-wrapper.is-second-level"
     );
+    const cta = document.querySelector(".navbar_mobile-cta-wrapper");
     const lenisMenu = lenisInit(this.menuWrapper);
     const lenisSubMenu = lenisInit(subMenu);
 
@@ -118,7 +119,7 @@ const navbar = {
 
       const tl = gsap.timeline({ paused: true });
 
-      tl.to([this.menuLinksWrapper, subMenu], {
+      tl.to([this.menuLinksWrapper, subMenu, cta], {
         x: "-100vw",
         duration: 0.4,
         ease: "power2.inOut",
@@ -128,6 +129,7 @@ const navbar = {
         clearSubMenu();
         appendSubMenu(dropdownLinks);
         lenisMenu.stop();
+        lenisMenu.scrollTo(0, { force: true });
         tl.restart();
       };
 
@@ -137,7 +139,7 @@ const navbar = {
 
     // handle second level back button
     const backBtnTl = gsap.timeline({ paused: true });
-    backBtnTl.to([this.menuLinksWrapper, subMenu], {
+    backBtnTl.to([this.menuLinksWrapper, subMenu, cta], {
       x: "0vw",
       duration: 0.4,
       ease: "power2.inOut",
