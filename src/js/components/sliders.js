@@ -29,7 +29,12 @@ const splideConfig = {
 const sliders = () => {
   let sliders = document.querySelectorAll(".splide");
 
+  if (!sliders) return;
+
   sliders.forEach((slider) => {
+    if (!slider.querySelector(".splide__track")) return;
+    if (!slider.querySelector(".splide__list")) return;
+
     let config = splideConfig.default;
     let mountConfig = {};
     if (slider.classList.contains("is-horizontal-card")) {
