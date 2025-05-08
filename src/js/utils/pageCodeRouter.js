@@ -8,6 +8,7 @@ import { schoolProgramInit } from "../pages/schoolProgram.js";
 import { writersCentreInit } from "../pages/writersCentre.js";
 import { newsInit } from "../pages/news.js";
 import { podcastsInit } from "../pages/podcasts.js";
+import { writerInit } from "../pages/writer.js";
 
 export function initPageRouter() {
   const pageWrapper = document.querySelector("[data-page-name]");
@@ -27,6 +28,7 @@ export function initPageRouter() {
     writersCentre: writersCentreInit,
     news: newsInit,
     podcasts: podcastsInit,
+    writer: writerInit,
     // Add additional page starters here
   };
 
