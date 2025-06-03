@@ -24,7 +24,10 @@ const pathNameInit = () => {
     const tl = gsap.timeline();
 
     let slashEl = '<div class="text-size-small margin-right">/</div>';
-    let linkEl = `<a href="${link}" class="no-underline w-inline-block"><div class="text-size-small margin-right">${linkName}</div></a>`;
+
+    //disabled the link functionality as per client request. To bring back, uncomment 1st let, and comment 2nd let.
+    // let linkEl = `<a href="${link}" class="no-underline w-inline-block"><div class="text-size-small margin-right">${linkName}</div></a>`;
+    let linkEl = `<div class="no-underline w-inline-block"><div class="text-size-small margin-right">${linkName}</div></div>`;
 
     linksBlock.insertAdjacentHTML("beforeend", slashEl + linkEl);
   });
