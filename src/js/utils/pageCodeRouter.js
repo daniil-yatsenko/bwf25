@@ -9,6 +9,7 @@ import { writersCentreInit } from "../pages/writersCentre.js";
 import { newsInit } from "../pages/news.js";
 import { podcastsInit } from "../pages/podcasts.js";
 import { writerInit } from "../pages/writer.js";
+import { festivalWritersInit } from "../pages/festivalWriters.js";
 
 export function initPageRouter() {
   const pageWrapper = document.querySelector("[data-page-name]");
@@ -29,6 +30,7 @@ export function initPageRouter() {
     news: newsInit,
     podcasts: podcastsInit,
     writer: writerInit,
+    festivalWriters: festivalWritersInit,
     // Add additional page starters here
   };
 

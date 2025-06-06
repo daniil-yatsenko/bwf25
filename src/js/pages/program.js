@@ -3,6 +3,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { lenisMain } from "../global/globalInit.js";
+import { scrollOffsets } from "../components/filters.js";
 
 const sessionsList = document.querySelector(".session-list_list");
 let dayBtns = document.querySelectorAll(".session-times_day-filter_day");
@@ -120,7 +121,19 @@ function triggerUIUpdate() {
   createScrollTriggers();
   setTimeout(() => {
     updateDayDate(allSessions[0]);
+    lenisMain.resize();
   }, 50); // delay for filter to fetch updated data
+}
+
+function scrollToSession() {
+  const sessionValue = new URLSearchParams(window.location.search).get(
+    "session"
+  );
+
+  console.log(sessionValue);
+  if (sessionValue) {
+    lenisMain.scrollTo(`#${sessionValue}`, { offset: -200 });
+  }
 }
 
 // mutation observer for Finsweet filters updates
@@ -145,6 +158,7 @@ const programInit = () => {
   cleanUpCommas();
   triggerUIUpdate();
   observer.observe(sessionsList, { childList: true });
+  scrollToSession();
 };
 
 export { programInit };

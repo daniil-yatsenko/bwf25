@@ -38,6 +38,8 @@ function scrollOffsets() {
 
   return offset;
 }
+
+export { scrollOffsets };
 let scrollOffset = scrollOffsets();
 
 // handle mobile filters block
