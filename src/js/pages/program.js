@@ -130,9 +130,10 @@ function scrollToSession() {
     "session"
   );
 
-  console.log(sessionValue);
   if (sessionValue) {
-    lenisMain.scrollTo(`#${sessionValue}`, { offset: -200 });
+    setTimeout(() => {
+      lenisMain.scrollTo(`#${sessionValue}`, { offset: -200 });
+    }, 300);
   }
 }
 
