@@ -126,6 +126,7 @@ function triggerUIUpdate() {
 }
 
 function scrollToSession() {
+  return;
   const sessionValue = new URLSearchParams(window.location.search).get(
     "session"
   );
