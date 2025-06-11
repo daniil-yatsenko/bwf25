@@ -134,6 +134,7 @@ function scrollToSession() {
     setTimeout(() => {
       lenisMain.scrollTo(`#${sessionValue}`, { offset: -200 });
     }, 300);
+    triggerUIUpdate();
   }
 }
 
