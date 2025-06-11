@@ -146,6 +146,7 @@ const observer = new MutationObserver((mutationsList) => {
       setTimeout(() => {
         triggered = false;
         triggerUIUpdate();
+        cleanUpCommas();
       }, 10);
     }
   }

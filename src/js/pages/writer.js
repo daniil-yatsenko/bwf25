@@ -9,8 +9,6 @@ const sessionLink = () => {
 };
 
 const writerInit = () => {
-  // disabling as it doesn't work properly with loading 100+ CMS items on the festival program page.
-  // return;
   sessionLink();
 };
 

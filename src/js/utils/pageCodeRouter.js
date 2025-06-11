@@ -10,6 +10,7 @@ import { newsInit } from "../pages/news.js";
 import { podcastsInit } from "../pages/podcasts.js";
 import { writerInit } from "../pages/writer.js";
 import { festivalWritersInit } from "../pages/festivalWriters.js";
+import { festivalWorkshopsInit } from "../pages/festivalWorkshops.js";
 
 export function initPageRouter() {
   const pageWrapper = document.querySelector("[data-page-name]");
@@ -31,6 +32,9 @@ export function initPageRouter() {
     podcasts: podcastsInit,
     writer: writerInit,
     festivalWriters: festivalWritersInit,
+    festivalWorkshops: festivalWorkshopsInit,
+    featureEvents: festivalWorkshopsInit, // duplicated due to same functionality
+
     // Add additional page starters here
   };
 
