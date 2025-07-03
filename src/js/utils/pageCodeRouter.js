@@ -34,6 +34,7 @@ export function initPageRouter() {
     festivalWriters: festivalWritersInit,
     festivalWorkshops: festivalWorkshopsInit,
     featureEvents: festivalWorkshopsInit, // duplicated due to same functionality
+    satelliteEvents: festivalWorkshopsInit, // duplicated due to same functionality
 
     // Add additional page starters here
   };
